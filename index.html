@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="styles.css" media="screen" charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
+    <script src="./bower_components/d3-measure-text/lib/d3-measure-text.js"></script>
+    <!--<script src="context.js"></script>-->
+    <!--<script src="timeline.js"></script>-->
+    <script src="focus_context_timeline.js"></script>
+  </head>
+  <body>
+    <script>
+
+      var dataset = [
+        {
+          row: 'Task1',
+          label: 'do something',
+          start: new Date(),
+          end: d3.time.hour.offset(new Date(), 2)
+        },
+        {
+          row: 'Task2',
+          label: 'do something else',
+          start: d3.time.hour.offset(new Date(), 1),
+          end: d3.time.hour.offset(new Date(), 3)
+        },
+        {
+          row: 'Task3',
+          label: 'do things',
+          start: d3.time.hour.offset(new Date(), 3),
+          end: d3.time.hour.offset(new Date(), 4)
+        },
+        {
+          row: 'Task4',
+          label: 'do',
+          start: d3.time.hour.offset(new Date(), 7),
+          end: d3.time.hour.offset(new Date(), 9)
+        },
+        {
+          row: 'Task5',
+          label: 'do',
+          start: d3.time.hour.offset(new Date(), 100),
+          end: d3.time.hour.offset(new Date(), 105)
+        }
+      ];
+
+      var props = {
+        width: 500,
+        height: 300,
+        data: dataset,
+        context: {
+          enabled: false
+        },
+        onContextChange: function (domain) {
+          console.log('context changed');
+        },
+        measureLabel: function (lbl) {
+          return d3MeasureText(lbl);
+        }
+      };
+
+      var timeline_chart_1 = tdg_timeline(props);
+
+      var svg = d3.select(document.body).append('svg')
+        .attr({
+          width: props.width,
+          height: props.height + 100
+        });
+
+      var chart_group_1 = svg.append('g').classed('chart_1', true);
+
+      chart_group_1
+        .call(timeline_chart_1);
+
+        var chart_group_2 = svg.append('g').classed('chart_2', true)
+          .attr('transform',
+          'translate(' + [0, 400] + ')'
+        );
+
+        var timeline_chart_2 = tdg_timeline(props);
+
+        timeline_chart_2.onContextChange(function ( domain ) {
+          timeline_chart_1.setTimeAxisDomain(domain);
+          timeline_chart_1.rerender();
+        });
+
+        timeline_chart_2
+          .context({enabled: true})
+          .height(100);
+
+          chart_group_2
+            .call(timeline_chart_2);
+
+
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,27 @@
+g.time-axis > path.domain {
+  stroke: black;
+  fill: none;
+}
+
+svg text.axis-label {
+  fill: black;
+  font: 10px sans-serif;
+}
+
+svg text.row-label {
+  fill: black;
+  font: 10px sans-serif;
+}
+
+g.time-axis > g.tick > line {
+  stroke: black;
+}
+
+g.row-borders line.row-border {
+  stroke: black;
+  stroke-dasharray: 2 2;
+}
+
+g.context rect.extent {
+  opacity: 0.3
+}
