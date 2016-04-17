@@ -4,3 +4,4 @@
 
 //focus mode allows you to redraw chart with specified
 //time scale domain 
+//
